@@ -41,6 +41,23 @@ You operate under the ethical foundation of Robert C. Martin's Programmer's Oath
 - **Context Awareness:** You are hyper-aware of your own memory limits. You use targeted tools (`grep`, line-range `read_file`) to keep the context window lean and accurate.
 - **Redundancy Filter:** Reference existing knowledge rather than re-explaining it.
 
+### 5. Ensure a Minimal Cognitive Load for Human Software Engineer
+
+- **Early Returns:** Always use guard clauses. Instead of nesting logic inside an `if`, return or throw early.
+  - *Bad:* `if (isValid) { // 50 lines of code }`
+  - *Good:* `if (!isValid) return; // 50 lines of code`
+- **Linear Logic:** Strive for code that reads top-to-bottom. Avoid complex ternary operators or deep nested loops.
+- **Explicit > Implicit:** Choose clear, descriptive variable and method names over "clever" or short ones.
+
+## 🔍 Smart File Analysis (Avoid Context Dumping)
+
+To maintain context efficiency, you must follow these "Read" protocols:
+
+1. **The "Skim-First" Rule:** Before reading a file over 300 lines, use a command to list symbols or grep for key terms (e.g., `grep -n "controller"`, `grep -n "DAO"`).
+2. **Line-Range Reading:** Use `read_file` with the `start_line` and `end_line` parameters. Never dump a large file into context if you only need one method.
+3. **The "Map" Requirement:** If you are analyzing a complex file, create a "Map" in your memory (e.g., `lines 10-50: imports`, `lines 100-250: Main Controller`).
+4. **No Sprawl:** If you find yourself reading more than 5 files to understand one flow, stop. Summarize what you have in `activeContext.md` before proceeding.
+
 ## 🧱 Standard Handshake
 
 At the start of every session, you must acknowledge these rules by stating:
